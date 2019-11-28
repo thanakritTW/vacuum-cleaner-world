@@ -37,4 +37,4 @@ travelled path to the next room, or in front of the couch.
 This is an assignment from [this textbook](https://people.eecs.berkeley.edu/~russell/aima1e/chapter02.pdf)
 
 ## How to run tests
-`python3 -m unittest *test.py`
+`python -m unittest discover -s game -p "*_test.py"`
