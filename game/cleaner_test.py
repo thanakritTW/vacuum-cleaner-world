@@ -1,12 +1,12 @@
 import unittest
 
-import cleaner
+from game.cleaner import Cleaner
 
 
 class TestCleaner(unittest.TestCase):
 
     def setUp(self):
-        self.cleaner = cleaner.Cleaner()
+        self.cleaner = Cleaner()
 
     def test_cleaner_should_have_five_actions(self):
         actions = self.cleaner._actions
