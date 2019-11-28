@@ -3,7 +3,7 @@ import unittest
 from game.environment import Environment
 
 
-class TestCleaner(unittest.TestCase):
+class EnvironmentTestCase(unittest.TestCase):
 
     def setUp(self):
         self.environment = Environment()
