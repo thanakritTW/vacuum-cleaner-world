@@ -20,7 +20,7 @@ class TestCleaner(unittest.TestCase):
     def test_should_raise_if_invalid_action(self):
         with self.assertRaises(Exception):
             self.cleaner.act("invalid_action")
-            
+
     def test_should_return_true_if_action_is_valid(self):
         valid_action = "valid_action"
         self.cleaner._actions.append(valid_action)
@@ -66,10 +66,10 @@ class TestCleaner(unittest.TestCase):
 
         self.cleaner.act(action)
         self.assertEqual(self.cleaner._direction, 270)
-        
+
         self.cleaner.act(action)
         self.assertEqual(self.cleaner._direction, 0)
-        
+
     def test_should_turn_left_when_turn_left(self):
         action = "turn_left"
 
@@ -82,6 +82,6 @@ class TestCleaner(unittest.TestCase):
 
         self.cleaner.act(action)
         self.assertEqual(self.cleaner._direction, 90)
-        
+
         self.cleaner.act(action)
         self.assertEqual(self.cleaner._direction, 0)
