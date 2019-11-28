@@ -34,5 +34,7 @@ perception; both appear as a 1 on the touch sensor.
 it is more realistic for the dirt to predominate in certain locations, such as along a heavily
 travelled path to the next room, or in front of the couch.
 
+This is an assignment from [this textbook](https://people.eecs.berkeley.edu/~russell/aima1e/chapter02.pdf)
+
 ## How to run tests
 `python3 -m unittest *test.py`
