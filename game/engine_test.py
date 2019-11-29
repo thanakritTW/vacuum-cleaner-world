@@ -50,13 +50,33 @@ class EngineTestCase(unittest.TestCase):
 
         self.assertEqual(result, 0)
 
-    def test_should_return_one_on_bumped_to_wall_an_zeros_for_other(self):
+    def test_should_return_one_when_it_is_home_position(self):
+        self.cleaner.position = MagicMock(return_value=(2, 2))
+        self.engine._home_position = (2, 2)
+
+        result = self.engine.infrared_sensor()
+
+        self.assertEqual(result, 1)
+
+    def test_should_return_zero_when_it_is_not_home_position(self):
+        self.cleaner.position = MagicMock(return_value=(0, 0))
+        self.engine._home_position = (1, 1)
+
+        result = self.engine.infrared_sensor()
+
+        self.assertEqual(result, 0)
+
+    def test_should_return_one_on_bumped_to_wall_and_zeros_for_other(self):
         self.cleaner.position = MagicMock(return_value=(0, 0))
         self.cleaner.direction = MagicMock(return_value=180)
+        went_forward_cleaner = Mock()
+        went_forward_cleaner.position = MagicMock(return_value=(-1, 0))
+        self.cleaner.act = MagicMock(return_value=went_forward_cleaner)
+        self.engine._home_position = (0, 0)
 
         results = self.engine.sensors()
 
-        self._assertSensors(results, (1, 0, 0))
+        self._assertSensors(results, (1, 0, 1))
 
     def _assertSensors(self, results, expectations):
         touch_sensor, photosensor, infrared_sensor = results
