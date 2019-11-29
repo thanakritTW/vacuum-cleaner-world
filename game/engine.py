@@ -9,6 +9,11 @@ class Engine:
         self._environment = environment
         self._home_position = cleaner.position()
 
+    def push_action(self, action):
+        next_cleaner = self._latest_cleaner.act(action)
+        self._latest_cleaner = next_cleaner
+        self._history.append(next_cleaner)
+
     def sensors(self):
         return self.touch_sensor(), self.photosensor(), self.infrared_sensor()
 

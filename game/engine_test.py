@@ -18,6 +18,17 @@ class EngineTestCase(unittest.TestCase):
         self.cleaner = Mock()
         self.engine = Engine(self.cleaner, self.environment)
 
+    def test_should_act_when_action_is_pushed(self):
+        went_forward_cleaner = Mock()
+        went_forward_cleaner.position = MagicMock(return_value=(1, 1))
+        self.cleaner.act = MagicMock(return_value=went_forward_cleaner)
+
+        self.engine.push_action("go_forward")
+
+        self.cleaner.act.assert_called_with("go_forward")
+        self.assertEqual(self.engine._latest_cleaner, went_forward_cleaner)
+        self.assertIn(went_forward_cleaner, self.engine._history)
+
     def test_should_return_one_on_get_touch_sensor(self):
         went_forward_cleaner = Mock()
         went_forward_cleaner.position = MagicMock(return_value=(-1, 0))
