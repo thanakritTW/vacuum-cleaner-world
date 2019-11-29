@@ -15,6 +15,9 @@ class Environment:
     def grids(self):
         return self._grids
 
+    def set_grids(self, grids):
+        self._grids = grids
+
     def home(self):
         return self._home
 

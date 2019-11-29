@@ -38,3 +38,10 @@ class EnvironmentTestCase(unittest.TestCase):
         self.environment.set_home(home)
 
         self.assertEqual(self.environment.home(), home)
+
+    def test_should_set_and_get_grids(self):
+        grids = [[1, 0], [1, 0]]
+
+        self.environment.set_grids(grids)
+
+        self.assertEqual(self.environment.grids(), grids)
