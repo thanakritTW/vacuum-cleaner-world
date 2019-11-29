@@ -1,9 +1,10 @@
 import math
 
+
 class Cleaner:
     _actions = ["clean", "turn_left", "turn_right", "go_forward", "turn_off"]
 
-    def __init__(self, position=(0,0), direction=0):
+    def __init__(self, position=(0, 0), direction=0):
         self._position = position
         self._direction = direction
 
@@ -36,15 +37,12 @@ class Cleaner:
 
     def _turn_right(self):
         new_direction = self._direction - 90
-        if (new_direction < 0):
+        if new_direction < 0:
             new_direction += 360
         return Cleaner(self._position, new_direction)
 
     def _turn_left(self):
         new_direction = self._direction + 90
-        if (new_direction >= 360):
+        if new_direction >= 360:
             new_direction -= 360
         return Cleaner(self._position, new_direction)
-
-
-

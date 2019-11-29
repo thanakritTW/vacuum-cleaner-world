@@ -8,7 +8,7 @@ class CleanerTestCase(unittest.TestCase):
     def setUp(self):
         self.cleaner = Cleaner()
 
-    def test_should_set_position_and_derection_via_constructor(self):
+    def test_should_set_position_and_direction_via_constructor(self):
         cleaner = Cleaner((1, 1), 90)
         self.assertEqual(cleaner.position(), (1, 1))
         self.assertEqual(cleaner.direction(), 90)
