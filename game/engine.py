@@ -9,10 +9,26 @@ class Engine:
         self._environment = environment
 
     def sensors(self):
-        NotImplementedError
+        return self.touch_sensor, 0, 0
+
+    def photosensor(self):
+        i, j = self._get_coordinate_point(self._latest_cleaner)
+        grids = self._environment.grids()
+        return grids[i][j]
 
     def touch_sensor(self):
-        NotImplementedError
+        cleaner = self._latest_cleaner.act("go_forward")
+        i, j = self._get_coordinate_point(cleaner)
+        return self._is_bumbed(i, j) * 1
 
-    def _get_coordinate_point(self):
-        NotImplementedError
+    def _get_coordinate_point(self, cleaner):
+        grids = self._environment.grids()
+        x, y = cleaner.position()
+        max_index = len(grids) - 1
+        return max_index - y, x
+
+    def _is_bumbed(self, i, j):
+        grids = self._environment.grids()
+        _is_bumbed_y = i > len(grids) or i < 0
+        _is_bumbed_x = j > len(grids[i]) or j < 0
+        return _is_bumbed_x or _is_bumbed_y
