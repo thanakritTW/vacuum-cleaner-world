@@ -20,3 +20,14 @@ class EnvironmentTestCase(unittest.TestCase):
         grids = self.environment.grids()
 
         self.assertEqual(grids, expected)
+
+    def test_should_return_input_grids(self):
+        expected = [
+            [0,1],
+            [1,0],
+        ]
+        environment = Environment(expected)
+
+        grids = environment.grids()
+
+        self.assertEqual(grids, expected)

@@ -35,15 +35,16 @@ class Cleaner:
         return Cleaner(new_position, self._direction)
 
     def _turn_right(self):
+        new_direction = self._direction - 90
+        if (new_direction < 0):
+            new_direction += 360
+        return Cleaner(self._position, new_direction)
+
+    def _turn_left(self):
         new_direction = self._direction + 90
         if (new_direction >= 360):
             new_direction -= 360
         return Cleaner(self._position, new_direction)
 
-    def _turn_left(self):
-        new_direction = self._direction - 90
-        if (new_direction < 0):
-            new_direction += 360
-        return Cleaner(self._position, new_direction)
 
 

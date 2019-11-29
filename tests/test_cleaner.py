@@ -59,8 +59,8 @@ class CleanerTestCase(unittest.TestCase):
         cleaner = self.cleaner.act(action)
         self.assertEqual(cleaner.position(), (0,-1))
 
-    def test_should_turn_right_when_turn_right(self):
-        action = "turn_right"
+    def test_should_turn_left_when_turn_left(self):
+        action = "turn_left"
 
         self.cleaner._direction = 0
         cleaner = self.cleaner.act(action)
@@ -78,8 +78,8 @@ class CleanerTestCase(unittest.TestCase):
         cleaner = self.cleaner.act(action)
         self.assertEqual(cleaner.direction(), 0)
 
-    def test_should_turn_left_when_turn_left(self):
-        action = "turn_left"
+    def test_should_turn_right_when_turn_right(self):
+        action = "turn_right"
 
         self.cleaner._direction = 0
         cleaner = self.cleaner.act(action)
