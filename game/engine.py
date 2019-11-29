@@ -37,7 +37,8 @@ class Engine:
         return max_index - y, x
 
     def _is_bumbed(self, i, j):
-        grids = self._environment.grids()
-        _is_bumbed_y = i > len(grids) or i < 0
-        _is_bumbed_x = j > len(grids[i]) or j < 0
-        return _is_bumbed_x or _is_bumbed_y
+        square_grids = self._environment.grids()
+        length = len(square_grids)
+        is_out_off_vertical_bound = i >= length or i < 0
+        is_out_off_horizontal_bound = j >= length or j < 0
+        return is_out_off_vertical_bound or is_out_off_horizontal_bound

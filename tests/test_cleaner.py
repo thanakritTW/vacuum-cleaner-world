@@ -35,7 +35,7 @@ class CleanerTestCase(unittest.TestCase):
         self.assertIsInstance(cleaner, Cleaner)
 
     def test_should_start_with_position_0_0(self):
-        self.assertEqual(self.cleaner.position(), (0,0))
+        self.assertEqual(self.cleaner.position(), (0, 0))
 
     def test_should_start_with_direction_positive_x(self):
         self.assertEqual(self.cleaner.direction(), 0)
@@ -45,19 +45,19 @@ class CleanerTestCase(unittest.TestCase):
 
         self.cleaner._direction = 0
         cleaner = self.cleaner.act(action)
-        self.assertEqual(cleaner.position(), (1,0))
+        self.assertEqual(cleaner.position(), (1, 0))
 
         self.cleaner._direction = 90
         cleaner = self.cleaner.act(action)
-        self.assertEqual(cleaner.position(), (0,1))
+        self.assertEqual(cleaner.position(), (0, 1))
 
         self.cleaner._direction = 180
         cleaner = self.cleaner.act(action)
-        self.assertEqual(cleaner.position(), (-1,0))
+        self.assertEqual(cleaner.position(), (-1, 0))
 
         self.cleaner._direction = 270
         cleaner = self.cleaner.act(action)
-        self.assertEqual(cleaner.position(), (0,-1))
+        self.assertEqual(cleaner.position(), (0, -1))
 
     def test_should_turn_left_when_turn_left(self):
         action = "turn_left"

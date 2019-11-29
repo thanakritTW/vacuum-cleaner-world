@@ -29,13 +29,24 @@ class EngineTestCase(unittest.TestCase):
         self.assertEqual(self.engine._latest_cleaner, went_forward_cleaner)
         self.assertIn(went_forward_cleaner, self.engine._history)
 
-    def test_should_return_one_on_get_touch_sensor(self):
+    def test_should_return_one_on_get_touch_sensor_hit_the_walls(self):
         went_forward_cleaner = Mock()
-        went_forward_cleaner.position = MagicMock(return_value=(-1, 0))
         self.cleaner.act = MagicMock(return_value=went_forward_cleaner)
 
+        went_forward_cleaner.position = MagicMock(return_value=(-1, 0))
         result = self.engine.touch_sensor()
+        self.assertEqual(result, 1)
 
+        went_forward_cleaner.position = MagicMock(return_value=(0, -1))
+        result = self.engine.touch_sensor()
+        self.assertEqual(result, 1)
+
+        went_forward_cleaner.position = MagicMock(return_value=(6, 0))
+        result = self.engine.touch_sensor()
+        self.assertEqual(result, 1)
+
+        went_forward_cleaner.position = MagicMock(return_value=(0, 6))
+        result = self.engine.touch_sensor()
         self.assertEqual(result, 1)
 
     def test_should_return_zero_on_get_touch_sensor(self):
