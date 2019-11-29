@@ -1,2 +1,4 @@
 class Environment:
-    pass
+
+    def __init__(self):
+        pass

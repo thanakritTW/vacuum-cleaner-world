@@ -1,6 +1,7 @@
 from game.cleaner import Cleaner
 from game.environment import Environment
 
+
 class Engine:
     def __init__(self, cleaner: Cleaner, environment: Environment):
         self._latest_cleaner = cleaner

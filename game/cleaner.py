@@ -31,7 +31,7 @@ class Cleaner:
     def _go_forward(self):
         x, y = self._position[0], self._position[1]
         rad = math.radians(self._direction)
-        new_position = (int(x + math.cos(rad)), int(y + math.sin(rad)))
+        new_position = x + int(math.cos(rad)), y + int(math.sin(rad))
         return Cleaner(new_position, self._direction)
 
     def _turn_right(self):
