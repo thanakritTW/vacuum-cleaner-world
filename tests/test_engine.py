@@ -7,6 +7,10 @@ from game.engine import Engine
 class EngineTestCase(unittest.TestCase):
 
     def setUp(self):
+        self.cleaner = Mock()
+        self.home_position = (1, 1)
+        self.cleaner.position = MagicMock(return_value=self.home_position)
+
         self.environment = Mock()
         self.environment.grids = MagicMock(return_value=[
             [0, 0, 0, 0, 1],
@@ -15,15 +19,19 @@ class EngineTestCase(unittest.TestCase):
             [0, 0, 0, 0, 1],
             [0, 0, 1, 0, 1],
         ])
-        self.cleaner = Mock()
+
         self.touch_sensor = Mock()
         self.photo_sensor = Mock()
         self.infrared_sensor = Mock()
+
         self.engine = Engine(
             self.cleaner, self.environment, self.touch_sensor, self.photo_sensor, self.infrared_sensor,
         )
 
-    def test_should_act_when_action_is_pushed(self):
+    def test_should_set_home_when_engine_init(self):
+        self.environment.set_home.assert_called_with(self.home_position)
+
+    def test_should_act_and_update_when_move(self):
         next_cleaner = Mock()
         self.cleaner.act = MagicMock(return_value=next_cleaner)
 
@@ -31,6 +39,9 @@ class EngineTestCase(unittest.TestCase):
 
         self.cleaner.act.assert_called_with("go_forward")
         self.assertEqual(self.engine._latest_cleaner, next_cleaner)
+        self.touch_sensor.set_cleaner.assert_called_with(next_cleaner)
+        self.photo_sensor.set_cleaner.assert_called_with(next_cleaner)
+        self.infrared_sensor.set_cleaner.assert_called_with(next_cleaner)
         self.assertIn(next_cleaner, self.engine._history)
 
     def test_should_call_sensors_to_retrieve_information(self):
