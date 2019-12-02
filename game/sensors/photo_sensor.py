@@ -1,4 +1,5 @@
 from game.sensors.sensor import BasedSensor
+from game.service import UtilService
 
 
 class PhotoSensor(BasedSensor):
@@ -6,6 +7,6 @@ class PhotoSensor(BasedSensor):
         super().__init__(cleaner, environment)
 
     def run(self):
-        i, j = self.get_coordinate_point(self._cleaner, self._environment)
+        i, j = UtilService.get_coordinate_point(self._cleaner, self._environment)
         grids = self._environment.grids()
         return grids[i][j]

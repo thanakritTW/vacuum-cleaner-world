@@ -1,4 +1,5 @@
 from game.sensors.sensor import BasedSensor
+from game.service import UtilService
 
 
 class TouchSensor(BasedSensor):
@@ -7,7 +8,7 @@ class TouchSensor(BasedSensor):
 
     def run(self):
         trying_cleaner = self._cleaner.act("go_forward")
-        i, j = self.get_coordinate_point(trying_cleaner, self._environment)
+        i, j = UtilService.get_coordinate_point(trying_cleaner, self._environment)
         return self._is_bumped(i, j) * 1
 
     def _is_bumped(self, i, j):
