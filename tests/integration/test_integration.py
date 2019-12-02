@@ -36,7 +36,12 @@ class IntegrationTestCase(unittest.TestCase):
 
         self.engine.push_action("turn_off")
 
-        self.assertEqual(self.engine.score(), 200 - 9 - 1000)
+        clean_up_score = 200
+        move_cost = 9
+        not_turning_off_at_home_penalty = 1000
+        total_score = clean_up_score - move_cost - not_turning_off_at_home_penalty
+
+        self.assertEqual(self.engine.score(), total_score)
         self.assertEqual(self.engine._environment.grids(), [
             [0, 0],
             [0, 0]
@@ -77,7 +82,9 @@ class IntegrationTestCase(unittest.TestCase):
 
         self.engine.push_action("turn_off")
 
-        self.assertEqual(self.engine.score(), -11)
+        move_cost = -11
+
+        self.assertEqual(self.engine.score(), move_cost)
 
     def _assertSensors(self, expecteds):
         touch_sensor, photo_sensor, infrared_sensor = self.engine.sensors()
