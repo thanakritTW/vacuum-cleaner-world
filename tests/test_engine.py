@@ -8,6 +8,8 @@ class EngineTestCase(unittest.TestCase):
 
     def setUp(self):
         self.cleaner = Mock()
+        self.cleaner.position = MagicMock(return_value=(1, 1))
+
         self.environment = Mock()
 
         self.touch_sensor = Mock()
@@ -41,6 +43,36 @@ class EngineTestCase(unittest.TestCase):
         score = self.engine.score()
 
         self.assertEqual(score, 100 - 1)
+
+    def test_should_do_nothing_and_terminate_when_turn_off_at_the_home_location(self):
+        self.environment.home = MagicMock(return_value=(1, 1))
+        self.cleaner.position = MagicMock(return_value=(1, 1))
+
+        self.engine.push_action("turn_off")
+        score = self.engine.score()
+
+        self.assertEqual(score, -1)
+
+    def test_should_reduce_score_and_terminate_when_turn_off_at_the_different_location(self):
+        self.engine.push_action("turn_off")
+        self.environment.home = MagicMock(return_value=(2, 2))
+        self.cleaner.position = MagicMock(return_value=(1, 1))
+
+        score = self.engine.score()
+
+        self.assertEqual(score, - 1000 - 1)
+
+    def test_should_not_get_score_when_clean_up_empty_tile(self):
+        self.cleaner.position = MagicMock(return_value=(0, 0))
+        self.environment.grids = MagicMock(return_value=[
+            [1, 1],
+            [0, 1],
+        ])
+        self.engine.push_action("clean")
+
+        score = self.engine.score()
+
+        self.assertEqual(score, -1)
 
     def test_should_set_home_when_engine_init(self):
         home_position = (1, 1)

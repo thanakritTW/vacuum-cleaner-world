@@ -34,6 +34,9 @@ class IntegrationTestCase(unittest.TestCase):
         self.engine.push_action("clean")
         self._assertSensors((1, 0, 0))
 
+        self.engine.push_action("turn_off")
+
+        self.assertEqual(self.engine.score(), 200 - 9 - 1000)
         self.assertEqual(self.engine._environment.grids(), [
             [0, 0],
             [0, 0]
@@ -71,6 +74,10 @@ class IntegrationTestCase(unittest.TestCase):
 
         self.engine.push_action("go_forward")
         self._assertSensors((1, 0, 1))
+
+        self.engine.push_action("turn_off")
+
+        self.assertEqual(self.engine.score(), -11)
 
     def _assertSensors(self, expecteds):
         touch_sensor, photo_sensor, infrared_sensor = self.engine.sensors()
