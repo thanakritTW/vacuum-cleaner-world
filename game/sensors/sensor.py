@@ -7,8 +7,9 @@ class BasedSensor:
     def set_cleaner(self, cleaner):
         self._cleaner = cleaner
 
-    def _get_coordinate_point(self, cleaner):
-        grids = self._environment.grids()
+    @staticmethod
+    def get_coordinate_point(cleaner, environment):
+        grids = environment.grids()
         x, y = cleaner.position()
         max_index = len(grids) - 1
         return max_index - y, x

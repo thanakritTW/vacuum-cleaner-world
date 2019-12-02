@@ -11,15 +11,15 @@ from game.sensors.touch_sensor import TouchSensor
 class IntegrationTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.cleaner = Cleaner(position=(1, 1), direction=90)
-        self.environment = Environment([
+        cleaner = Cleaner(position=(1, 1), direction=90)
+        environment = Environment([
             [1, 0],
             [0, 1],
         ])
-        self.touch_sensor = TouchSensor(self.cleaner, self.environment)
-        self.photo_sensor = PhotoSensor(self.cleaner, self.environment)
-        self.infrared_sensor = InfraredSensor(self.cleaner, self.environment)
-        self.engine = Engine(self.cleaner, self.environment, self.touch_sensor, self.photo_sensor, self.infrared_sensor)
+        touch_sensor = TouchSensor(cleaner, environment)
+        photo_sensor = PhotoSensor(cleaner, environment)
+        infrared_sensor = InfraredSensor(cleaner, environment)
+        self.engine = Engine(cleaner, environment, touch_sensor, photo_sensor, infrared_sensor)
 
     def test_simple_program_flow_cleaner_move(self):
         self._assertSensors((1, 0, 1))
