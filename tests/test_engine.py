@@ -18,6 +18,30 @@ class EngineTestCase(unittest.TestCase):
             self.cleaner, self.environment, self.touch_sensor, self.photo_sensor, self.infrared_sensor,
         )
 
+    def test_should_get_score(self):
+        score = self.engine.score()
+
+        self.assertEqual(score, 0)
+
+    def test_should_lose_score_when_take_action(self):
+        self.engine.push_action("go_forward")
+
+        score = self.engine.score()
+
+        self.assertEqual(score, -1)
+
+    def test_should_get_score_when_successfully_clean_up(self):
+        self.cleaner.position = MagicMock(return_value=(1, 1))
+        self.environment.grids = MagicMock(return_value=[
+            [1, 1],
+            [0, 1],
+        ])
+        self.engine.push_action("clean")
+
+        score = self.engine.score()
+
+        self.assertEqual(score, 100 - 1)
+
     def test_should_set_home_when_engine_init(self):
         home_position = (1, 1)
         self.cleaner.position = MagicMock(return_value=home_position)
