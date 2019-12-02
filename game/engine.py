@@ -1,3 +1,6 @@
+from game.service import UtilService
+
+
 class Engine:
     def __init__(self, cleaner, environment, touch_sensor, photo_sensor, infrared_sensor):
         self._latest_cleaner = cleaner
@@ -10,8 +13,17 @@ class Engine:
         self._infrared_sensor = infrared_sensor
 
     def push_action(self, action):
+        if action == "clean":
+            self._clean()
         next_cleaner = self._latest_cleaner.act(action)
         self._update_cleaner(next_cleaner)
+
+    def _clean(self):
+        i, j = UtilService.get_coordinate_point(self._latest_cleaner, self._environment)
+        grids = self._environment.grids()
+        if grids[i][j] == 1:
+            grids[i][j] = 0
+        self._environment.set_grids(grids)
 
     def _update_cleaner(self, cleaner):
         self._latest_cleaner = cleaner

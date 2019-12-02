@@ -8,17 +8,7 @@ class EngineTestCase(unittest.TestCase):
 
     def setUp(self):
         self.cleaner = Mock()
-        self.home_position = (1, 1)
-        self.cleaner.position = MagicMock(return_value=self.home_position)
-
         self.environment = Mock()
-        self.environment.grids = MagicMock(return_value=[
-            [0, 0, 0, 0, 1],
-            [0, 1, 0, 0, 1],
-            [0, 0, 1, 0, 1],
-            [0, 0, 0, 0, 1],
-            [0, 0, 1, 0, 1],
-        ])
 
         self.touch_sensor = Mock()
         self.photo_sensor = Mock()
@@ -29,7 +19,15 @@ class EngineTestCase(unittest.TestCase):
         )
 
     def test_should_set_home_when_engine_init(self):
-        self.environment.set_home.assert_called_with(self.home_position)
+        home_position = (1, 1)
+        self.cleaner.position = MagicMock(return_value=home_position)
+        environment = Mock()
+
+        Engine(
+            self.cleaner, environment, self.touch_sensor, self.photo_sensor, self.infrared_sensor,
+        )
+
+        environment.set_home.assert_called_once_with(home_position)
 
     def test_should_act_and_update_when_move(self):
         next_cleaner = Mock()
@@ -52,6 +50,20 @@ class EngineTestCase(unittest.TestCase):
         results = self.engine.sensors()
 
         self._assertSensors(results, (1, 0, 1))
+
+    def test_should_clean_room_and_set_new_grids(self):
+        self.cleaner.position = MagicMock(return_value=(1, 1))
+        self.environment.grids = MagicMock(return_value=[
+            [1, 1],
+            [0, 1],
+        ])
+
+        self.engine.push_action("clean")
+
+        self.environment.set_grids.assert_called_once_with([
+            [1, 0],
+            [0, 1],
+        ])
 
     def _assertSensors(self, results, expectations):
         touch_sensor, photo_sensor, infrared_sensor = results

@@ -21,6 +21,24 @@ class IntegrationTestCase(unittest.TestCase):
         infrared_sensor = InfraredSensor(cleaner, environment)
         self.engine = Engine(cleaner, environment, touch_sensor, photo_sensor, infrared_sensor)
 
+    def test_cleaner_clean_up(self):
+        self.engine.push_action("turn_left")
+        self.engine.push_action("go_forward")
+        self.engine.push_action("clean")
+        self._assertSensors((1, 0, 0))
+
+        self.engine.push_action("turn_left")
+        self.engine.push_action("go_forward")
+        self.engine.push_action("turn_left")
+        self.engine.push_action("go_forward")
+        self.engine.push_action("clean")
+        self._assertSensors((1, 0, 0))
+
+        self.assertEqual(self.engine._environment.grids(), [
+            [0, 0],
+            [0, 0]
+        ])
+
     def test_simple_program_flow_cleaner_move(self):
         self._assertSensors((1, 0, 1))
 
